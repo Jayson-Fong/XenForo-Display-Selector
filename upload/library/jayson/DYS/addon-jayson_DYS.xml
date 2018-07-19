@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="jayson_DYS" title="[JF] Display Selector" version_string="1.0.0" version_id="1" url="https://jaysonfong.me" install_callback_class="jayson_DYS_Install" install_callback_method="Install" uninstall_callback_class="jayson_DYS_Install" uninstall_callback_method="Uninstall">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="admin_select_display_group"><![CDATA[	<dl class="ctrlUnit">
+       	<dt>{xen:phrase jayson_dys_use_styling_of}:</dt>
+            <dd>
+                <ul>
+                    <xen:foreach loop="$selectableGroups" value="$group" key="$group_id">
+                        <li>
+                            <label for="ctrl_usergroup_{$group_id}"><input name="selected_display_group_id" type="radio" id="ctrl_usergroup_{$group_id}" value="{$group_id}" {xen:checked "{$group_id} == {$userDisplayStyleGroupId}"} /> <span style="{$group.username_css}">{$group.title}</span>
+                        </li>
+                    </xen:foreach>
+                </ul>
+            </dd>
+    <dt>{xen:phrase jayson_dys_marked}</dt>
+    </dl>]]></template>
+  </admin_templates>
+  <admin_template_modifications>
+    <modification template="user_extra" modification_key="jayson_dys_admin_select_display_group" description="" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<h3 class="textHeading">{xen:phrase active_user_upgrades}</h3>]]></find>
+      <replace><![CDATA[<h3 class="textHeading">{xen:phrase jayson_dys_username_styling_preferences}</h3>
+<xen:include template="admin_select_display_group" />
+$0]]></replace>
+    </modification>
+  </admin_template_modifications>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="jayson_DYS_Abstract_Dependencies" callback_method="initDependencies" active="1" hint="" description=""/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="jayson_DYS_Listener" callback_method="Listen" active="1" hint="XenForo_ControllerPublic_Account" description=""/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="jayson_DYS_Listener" callback_method="Listen" active="1" hint="XenForo_ControllerAdmin_User" description=""/>
+    <listener event_id="load_class_datawriter" execute_order="0" callback_class="jayson_DYS_Listener" callback_method="Listen" active="1" hint="XenForo_DataWriter_User" description=""/>
+    <listener event_id="load_class_model" execute_order="10" callback_class="jayson_DYS_Listener" callback_method="Listen" active="1" hint="XenForo_Model_UserUpgrade" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="jayson_DYS" display_order="1" debug_only="0"/>
+    <option option_id="jayson_dys_alternativeview" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="jayson_DYS" display_order="200"/>
+    </option>
+    <option option_id="jayson_dys_auto_apply" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>jayson_DYS_Option_UserUpgrades::renderOption</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="jayson_DYS" display_order="400"/>
+    </option>
+    <option option_id="jayson_dys_auto_apply_upgrades" edit_format="callback" data_type="array" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>jayson_DYS_Option_UserUpgrades::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="jayson_DYS" display_order="410"/>
+    </option>
+    <option option_id="jayson_dys_copyright" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="jayson_DYS" display_order="1000"/>
+    </option>
+    <option option_id="jayson_dys_emptyvoid" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="jayson_DYS" display_order="250"/>
+    </option>
+    <option option_id="jayson_dys_nonselectable" edit_format="callback" data_type="array" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>jayson_DYS_Option_UserGroups::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="jayson_DYS" display_order="100"/>
+    </option>
+    <option option_id="jayson_dys_unlock_on_noperm" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="jayson_DYS" display_order="300"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="jayson_dys"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="jayson_dys" permission_id="canSelectAnyDisplayGroup" permission_type="flag" depend_permission_id="canSelectDisplayGroup" default_value="unset" interface_group_id="generalPermissions" display_order="0"/>
+      <permission permission_group_id="jayson_dys" permission_id="canSelectDisplayGroup" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="0"/>
+    </permissions>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="jayson_dys_marked" version_id="1" version_string="1.0.0"><![CDATA[Colors the user does not have access to are marked with a '*'.  This does <strong>not</strong> factor in if the user has permissions to all group styles.]]></phrase>
+    <phrase title="jayson_dys_username_styling_preferences" version_id="1" version_string="1.0.0"><![CDATA[Username Styling Preferences]]></phrase>
+    <phrase title="jayson_dys_use_styling_of" version_id="1" version_string="1.0.0"><![CDATA[Use Styling Of]]></phrase>
+    <phrase title="option_group_jayson_DYS" version_id="1" version_string="1.0.0"><![CDATA[[JF] Display Selector]]></phrase>
+    <phrase title="option_group_jayson_DYS_description" version_id="1" version_string="1.0.0"><![CDATA[Display Selector Options]]></phrase>
+    <phrase title="option_jayson_dys_alternativeview" version_id="1" version_string="1.0.0"><![CDATA[Alternative View]]></phrase>
+    <phrase title="option_jayson_dys_alternativeview_explain" version_id="1" version_string="1.0.0"><![CDATA[Alternative view will display the visitor's username instead of the group name in the selector.]]></phrase>
+    <phrase title="option_jayson_dys_auto_apply" version_id="5" version_string="1.0.4"><![CDATA[Upgrade Auto Apply]]></phrase>
+    <phrase title="option_jayson_dys_auto_apply_explain" version_id="5" version_string="1.0.4"><![CDATA[Automatically set a user's display group preference upon receiving an account upgrade.]]></phrase>
+    <phrase title="option_jayson_dys_auto_apply_upgrades" version_id="5" version_string="1.0.4"><![CDATA[Automatic Username Styling Application Upgrades]]></phrase>
+    <phrase title="option_jayson_dys_auto_apply_upgrades_explain" version_id="5" version_string="1.0.4"><![CDATA[Selected upgrades will have their associated extra group's style set as the user's username style. For performance reasons, this ignores your <strong>Remove Non-Color Groups From Selector</strong> selection while choosing which style to apply. If no applicable groups are found based on your upgrade configuration and <strong>Non-Selectable Groups</strong> selection(s), this will not change anything.]]></phrase>
+    <phrase title="option_jayson_dys_copyright" version_id="6" version_string="1.1.0"><![CDATA[Copyright Removal]]></phrase>
+    <phrase title="option_jayson_dys_copyright_explain" version_id="6" version_string="1.1.0"><![CDATA[Tick to remove the copyright notice.]]></phrase>
+    <phrase title="option_jayson_dys_emptyvoid" version_id="1" version_string="1.0.0"><![CDATA[Remove Non-Color Groups From Selector]]></phrase>
+    <phrase title="option_jayson_dys_emptyvoid_explain" version_id="1" version_string="1.0.0"><![CDATA[Removes groups that do not have associated username CSS from the selector.]]></phrase>
+    <phrase title="option_jayson_dys_nonselectable" version_id="1" version_string="1.0.0"><![CDATA[Non-Selectable Groups]]></phrase>
+    <phrase title="option_jayson_dys_nonselectable_explain" version_id="1" version_string="1.0.0"><![CDATA[These groups will not be shown in the selector and requests to set a member's display group style preference to a group selected will not cause any changes.]]></phrase>
+    <phrase title="option_jayson_dys_unlock_on_noperm" version_id="1" version_string="1.0.0"><![CDATA[Remove Selection No Permission]]></phrase>
+    <phrase title="option_jayson_dys_unlock_on_noperm_explain" version_id="5" version_string="1.0.4"><![CDATA[Remove username styling locking from users who no longer have permission for their selected style. This only occurs during rebuilds.]]></phrase>
+    <phrase title="permission_group_jayson_dys" version_id="1" version_string="1.0.0"><![CDATA[Display Selector]]></phrase>
+    <phrase title="permission_jayson_dys_canSelectAnyDisplayGroup" version_id="1" version_string="1.0.0"><![CDATA[Can Select Any Display Group]]></phrase>
+    <phrase title="permission_jayson_dys_canSelectDisplayGroup" version_id="1" version_string="1.0.0"><![CDATA[Can Select Display Group]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="jayson_dys_select_display_group" version_id="1" version_string="1.0.0"><![CDATA[<xen:if is="{$canSelectDisplayGroup}">
+    <h3 class="sectionHeader">{xen:phrase jayson_dys_username_styling_preferences}</h3>	
+	<dl class="ctrlUnit">
+        <dt>{xen:phrase jayson_dys_use_styling_of}:</dt>
+            <dd>
+                <ul>
+                    <xen:foreach loop="$selectableGroups" value="$group" key="$group_id">
+                        <li>
+                            <label for="ctrl_usergroup_{$group_id}"><input name="selected_display_group_id" type="radio" id="ctrl_usergroup_{$group_id}" value="{$group_id}" {xen:checked "{$group_id} == {$visitor.display_style_group_id}"} /> <span style="{$group.username_css}">{$group.title}</span>
+                        </li>
+                    </xen:foreach>
+                </ul>
+            </dd>
+    </dl>
+</xen:if>]]></template>
+  </templates>
+  <public_template_modifications>
+    <modification template="footer" modification_key="jayson_dys_copyrightnotice" description="[JF] Copyright Notice for Display Selector" execution_order="10" enabled="1" action="callback">
+      <find><![CDATA[/{xen:phrase (?:xenforo|extra)_copyright}/]]></find>
+      <replace><![CDATA[jayson_DYS_Template_CopyrightNotice::copyrightNotice]]></replace>
+    </modification>
+    <modification template="navigation_visitor_tab" modification_key="jayson_dys_navigation_visitor_tab" description="" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<h3><a href="{xen:link members, $visitor}" class="concealed" title="{xen:phrase view_your_profile}">{$visitor.username}</a></h3>]]></find>
+      <replace><![CDATA[<h3><xen:username user="$visitor" class="concealed" rich="true" title="{xen:phrase view_your_profile}" /></h3>]]></replace>
+    </modification>
+    <modification template="resource_view" modification_key="jayson_dys_resource_view" description="" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$resource.username}]]></find>
+      <replace><![CDATA[<xen:username user="{$resource}" />]]></replace>
+    </modification>
+    <modification template="account_preferences" modification_key="jayson_dys_select_display_group" description="Adds a Radio Selector to Account Preferences" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[<dl class="ctrlUnit submitUnit">]]></find>
+      <replace><![CDATA[<xen:include template="jayson_dys_select_display_group" />
+$0]]></replace>
+    </modification>
+    <modification template="sidebar_online_users" modification_key="jayson_dys_sidebar_online_users" description="" execution_order="10" enabled="1" action="str_replace">
+      <find><![CDATA[{$user.username}]]></find>
+      <replace><![CDATA[{xen:helper richUserName, $user}]]></replace>
+    </modification>
+  </public_template_modifications>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
