@@ -1,7 +1,8 @@
 <?php
 class jayson_DYS_Model_StyleGroup extends XenForo_Model {
 	public function getStyleGroup($userId) {
-		return ($this->_getDb()->fetchRow('SELECT jayson_displaygroup_id FROM xf_user WHERE user_id = ?', $userId))['jayson_displaygroup_id'];
+        $user = $this->_getUserModel()->getFullUserById($userId);
+        return $user['jayson_displaygroup_id'];
 	}
 	public function setStyleGroup($displayGroup, $userId) {
         $user = $this->_getUserModel()->getFullUserById($userId);
