@@ -10,7 +10,7 @@ class jayson_DYS_Extend_XenForo_DataWriter_User extends XFCP_jayson_DYS_Extend_X
             $styleGroupId = $this->_getStyleGroupModel()->getStyleGroup($this->get('user_id'));
             $groups = explode(',', $this->get('secondary_group_ids'));
             $groups[] = $this->get('user_group_id');
-            if (empty($styleGroupId)) {
+            if (empty($styleGroupId) || $this->get('is_banned')) {
                 return $parent;
             }
             $user = $this->_getUserModel()->getUserById($this->get('user_id'));
