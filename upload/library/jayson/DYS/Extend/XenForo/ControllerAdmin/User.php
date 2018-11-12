@@ -30,9 +30,8 @@ class jayson_DYS_Extend_XenForo_ControllerAdmin_User extends XFCP_jayson_DYS_Ext
                 }
             }
         }
-        $params['userDisplayStyleGroupId'] = $user['display_style_group_id'];
-        $params['selectableGroups'] = $selectableGroups;
-        $parent->params = $params;
+        $parent->params['userDisplayStyleGroupId'] = $user['display_style_group_id'];
+        $parent->params['selectableGroups'] = $selectableGroups;
         return $parent;
     }
     public function actionSave() {
